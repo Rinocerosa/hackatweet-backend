@@ -5,6 +5,14 @@ const userSchema = mongoose.Schema({
   username: String,
   password: String,
   token: String,
+  profilImage: {
+    type: String,
+    image: "profil.png",
+  },
+  message: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "message",
+  },
 });
 
 const User = mongoose.model("users", userSchema);
