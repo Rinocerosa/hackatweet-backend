@@ -6,24 +6,24 @@ const User = require("../models/users");
 
 /* GET Messages listing. */
 router.get("/", function (req, res) {
-  Message.find().then((data) => {
-    if (data.length < 0) {
-      res.json({ result: true, info: data });
-    } else {
-      res.json({ result: false, info: "Your don't have any messages" });
-    }
-  });
+  Message.find()
+    .populate({ path: "users" })
+    .then((data) => {
+      if (data.length > 0) {
+        res.json({ result: true, info: data });
+      } else {
+        res.json({ result: false, info: "Your don't have any messages" });
+      }
+    });
 });
 /* send Messages listing. */
-router.post("/send", function (req, res) {
-  const newMessage = Message({
-    user: req.body.userId,
-    textContent: req.body.textContent,
-    like: req.body.like,
-    date: new Date(),
-  });
-
   if (req.body !== null && req.body !== undefined) {
+    const newMessage = Message({
+      user: req.body.userId,
+      textContent: req.body.textContent,
+      like: req.body.like,
+      date: new Date(),
+    });
     newMessage.save().then((data) => {
       res.json({ result: true, infos: data });
     });

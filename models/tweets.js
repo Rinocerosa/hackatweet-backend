@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-<<<<<<< HEAD
-const tweetSchema = mongoose.schema({});
-=======
 const MessageSchema = mongoose.Schema({
   user: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   textContent: String,
@@ -13,4 +10,3 @@ const MessageSchema = mongoose.Schema({
 const Message = mongoose.model("message", MessageSchema);
 
 module.exports = Message;
->>>>>>> messages
