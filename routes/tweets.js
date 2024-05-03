@@ -16,7 +16,11 @@ router.get("/", function (req, res) {
 });
 /* send Messages listing. */
 router.post("/send", function (req, res) {
-  if (req.body !== null && req.body !== undefined) {
+  if (
+    req.body !== null &&
+    req.body !== undefined &&
+    req.body.textContent.trim() !== ""
+  ) {
     const newMessage = Message({
       user: req.body.userId,
       textContent: req.body.textContent,
@@ -27,16 +31,20 @@ router.post("/send", function (req, res) {
       Message.findOne({ _id: data._id })
         .populate("user")
         .then((data) => {
-          console.log(data.user[0].firstname);
-          const infoData = {
-            textContent: data.textContent,
-            like: data.like,
-            date: data.date,
-            userFirstname: data.user[0].firstname,
-            userUsername: data.user[0].username,
-            userToken: data.user[0].token,
-          };
-          res.json({ result: true, infos: infoData });
+          console.log(data.user);
+          if (data.user.length > 0) {
+            const infoData = {
+              textContent: data.textContent,
+              like: data.like,
+              date: data.date,
+              userFirstname: data.user[0].firstname,
+              userUsername: data.user[0].username,
+              userToken: data.user[0].token,
+            };
+            res.json({ result: true, infos: infoData });
+          } else {
+            res.json({ result: false });
+          }
         });
     });
   }
