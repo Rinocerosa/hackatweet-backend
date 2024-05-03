@@ -43,7 +43,7 @@ router.post("/send", function (req, res) {
             };
             res.json({ result: true, infos: infoData });
           } else {
-            res.json({ result: false });
+            res.json({ result: false, infos: [] });
           }
         });
     });

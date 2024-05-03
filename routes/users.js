@@ -29,7 +29,12 @@ router.post("/signup", (req, res) => {
       });
 
       newUser.save().then((newDoc) => {
-        res.json({ result: true, token: newDoc.token, id: newDoc.id });
+        res.json({
+          result: true,
+          token: newDoc.token,
+          id: newDoc._id,
+          firstName: newDoc.firstname,
+        });
       });
     } else {
       res.json({ result: false, error: "User exists" });
@@ -50,6 +55,7 @@ router.post("/signin", (req, res) => {
         token: data.token,
         username: data.username,
         firstName: data.firstName,
+        id: data._id,
       });
     } else {
       res.json({ result: false, error: "User not found" });
