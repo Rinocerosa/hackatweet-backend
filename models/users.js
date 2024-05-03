@@ -5,10 +5,7 @@ const userSchema = mongoose.Schema({
   username: String,
   password: String,
   token: String,
-  profilImage: {
-    type: String,
-    image: "profil.png",
-  },
+  profilImage: String,
   message: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "message",

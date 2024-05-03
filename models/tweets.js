@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const MessageSchema = mongoose.Schema({
-  user: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+  user: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
   textContent: String,
   like: Number,
   date: Date,
