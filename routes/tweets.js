@@ -6,13 +6,15 @@ const User = require("../models/users");
 
 /* GET Messages listing. */
 router.get("/", function (req, res) {
-  Message.find().then((data) => {
-    if (data.length > 0) {
-      res.json({ result: true, info: data });
-    } else {
-      res.json({ result: false, info: "Your don't have any messages" });
-    }
-  });
+  Message.find()
+    .populate("user")
+    .then((data) => {
+      if (data.length > 0) {
+        res.json({ result: true, info: data });
+      } else {
+        res.json({ result: false, info: "Your don't have any messages" });
+      }
+    });
 });
 /* send Messages listing. */
 router.post("/send", function (req, res) {
@@ -66,14 +68,9 @@ router.get("/delete/:id", function (req, res) {
 });
 /* Update like */
 router.post("/update", function (req, res) {
-  if (
-    req.body.id.trim() !== "" &&
-    req.body.id.trim() !== null &&
-    req.body.id.trim() !== undefined
-  ) {
+  if (req.body.id !== "" && req.body.id !== null && req.body.id !== undefined) {
     Message.updateOne({ _id: req.body.id }, { like: req.body.like }).then(
       (data) => {
-        console.log(data);
         res.json({ result: true, info: "message updated" });
       }
     );
